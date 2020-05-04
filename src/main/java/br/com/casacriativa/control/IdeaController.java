@@ -85,15 +85,22 @@ public class IdeaController {
 	
 	@RequestMapping("/charge")
 	public ModelAndView charge() {
-		categoryDao.save(new Category("Alimentação"));
-		categoryDao.save(new Category("Lazer"));
-		categoryDao.save(new Category("Hobbie"));
-		categoryDao.save(new Category("Profissional"));
+		Category food = new Category("Alimentação");
+		Category health = new Category("Saúde");
+		Category hobby = new Category("Hobby");
+		Category pro = new Category("Profissional");
+		categoryDao.save(food);
+		categoryDao.save(hobby);
+		categoryDao.save(pro);
+		categoryDao.save(health);
 		
-		ideaDao.save(new Idea("Siga Receitas", categoryDao.get(1), "Siga essa receitas incríveis e super fácil de reproduzir na sua casa, com ingredientes que você já tem!", "https://image.flaticon.com/icons/svg/2729/2729077.svg", "https://www.flaticon.com/free-icon/recipe_2729077"));
-		ideaDao.save(new Idea("Navegue", categoryDao.get(2), "Jogue tabuleiro com seus amigos e vizinhos mais próximos!", "https://image.flaticon.com/icons/svg/2729/2729030.svg", "https://www.flaticon.com/free-icon/puzzle_2729030" ));
-		ideaDao.save(new Idea("Faça Vídeos", categoryDao.get(3), "Videos para o youtube tiram todo mundo do marasmo hein! E com o dolar valorizado, da pra tu tirar uma graninha massa!", "https://image.flaticon.com/icons/svg/2729/2729060.svg" , "https://www.flaticon.com/free-icon/puzzle_2729030" ));
-		ideaDao.save(new Idea("Vire Youtuber", categoryDao.get(4),"Com uma camera amadora ou profissional, falar sobre o assunto que mais gosta, ou passar informações relevantes. Essa é a hora de começar no mundo do Youtube!", "https://image.flaticon.com/icons/svg/2729/2729018.svg", "https://www.flaticon.com/free-icon/puzzle_2729030"));
+		String lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vel erat eleifend, ornare lacus non, convallis augue. Curabitur suscipit id nisi et eleifend. Mauris et placerat nisl. Donec ac dolor ornare, vestibulum nisl porta, finibus nibh.";
+		String ipsum = "Vivamus tempus consequat quam nec luctus. Duis mattis, nunc eget feugiat luctus, metus mauris egestas mi, non pharetra dui tortor egestas tortor. Nam porttitor ultrices mattis. Nulla quis sem at nulla malesuada bibendum in nec magna.";
+		
+		ideaDao.save(new Idea("Siga Receitas", food, lorem, "https://image.flaticon.com/icons/svg/2729/2729077.svg", "https://www.flaticon.com/free-icon/recipe_2729077"));
+		ideaDao.save(new Idea("Faça Esses Exercícios", health, lorem, "https://image.flaticon.com/icons/svg/2729/2729030.svg", "https://www.flaticon.com/free-icon/puzzle_2729030" ));
+		ideaDao.save(new Idea("Faça Vídeos", hobby, ipsum, "https://image.flaticon.com/icons/svg/2729/2729060.svg" , "https://www.flaticon.com/free-icon/puzzle_2729030" ));
+		ideaDao.save(new Idea("Faça Esse Curso", pro, ipsum, "https://image.flaticon.com/icons/svg/2729/2729018.svg", "https://www.flaticon.com/free-icon/puzzle_2729030"));
 		return new ModelAndView("redirect:/");
 	}
 	
