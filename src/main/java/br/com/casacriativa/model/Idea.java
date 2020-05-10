@@ -12,7 +12,6 @@ public class Idea {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
 	private String title;
 	private String linkImage;
 	private String description;

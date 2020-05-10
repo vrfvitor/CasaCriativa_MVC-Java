@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
@@ -32,7 +33,7 @@ public class IdeaDAO {
 	}
 	
 	public List<Idea> getAll(){
-		return em.createQuery("SELECT i FROM Idea i ORDER BY i.id DESC", Idea.class).getResultList();
+		return em.createQuery("SELECT i FROM Idea i JOIN FETCH i.category ORDER BY i.id DESC", Idea.class).getResultList();
 	}
 
 	public void remove(Integer id) {
@@ -51,17 +52,18 @@ public class IdeaDAO {
 		
 		CriteriaBuilder builder = em.getCriteriaBuilder();
 		CriteriaQuery<Idea> query = builder.createQuery(Idea.class);
-		Root<Idea> root = query.from(Idea.class);
+		Root<Idea> idea = query.from(Idea.class);
+		idea.fetch("category", JoinType.INNER);
 
-		Predicate titleLike = builder.like(root.get("title"), "%" + search +"%");
-		Predicate descLike = builder.like(root.get("description"), "%" + search +"%");
+		Predicate titleLike = builder.like(idea.get("title"), "%" + search +"%");
+		Predicate descLike = builder.like(idea.get("description"), "%" + search +"%");
 		Predicate orPredicates = builder.or(titleLike,descLike);
 
 		if(categoryId != null) {			
-			Predicate category = builder.equal(root.get("category"), categoryId);
-			query.select(root).where(builder.and(category, orPredicates));
+			Predicate category = builder.equal(idea.get("category"), categoryId);
+			query.select(idea).where(builder.and(category, orPredicates));
 		} else {
-			query.select(root).where(orPredicates);
+			query.select(idea).where(orPredicates);
 		}
 		
 		TypedQuery<Idea> typedQuery = em.createQuery(query);

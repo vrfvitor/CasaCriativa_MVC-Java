@@ -20,7 +20,7 @@ import br.com.casacriativa.dao.IdeaDAO;
 
 @EnableWebMvc
 @EnableCaching
-@ComponentScan(basePackageClasses = {IdeaController.class, IdeaDAO.class})
+@ComponentScan(basePackageClasses = {IdeaController.class, IdeaDAO.class, LoadDatabaseOnStartup.class})
 public class WebAppConfig implements WebMvcConfigurer {
 
 	@Bean
@@ -29,6 +29,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 		
 		resolver.setPrefix("/WEB-INF/views/");
 		resolver.setSuffix(".jsp");
+		resolver.setExposedContextBeanNames("categories");
 		
 		return resolver;
 	}

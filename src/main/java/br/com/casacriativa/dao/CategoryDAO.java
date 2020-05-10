@@ -26,7 +26,7 @@ public class CategoryDAO {
 	}
 	
 	public List<Category> getAll(){
-		return manager.createQuery("SELECT c FROM Category c", Category.class).getResultList();
+		return manager.createQuery("FROM Category c", Category.class).getResultList();
 	}
 	
 	public Category get(Integer id) {
